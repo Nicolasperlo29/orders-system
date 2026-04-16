@@ -7,14 +7,16 @@ import org.example.pedidosback.users.domain.UserType;
 import org.example.pedidosback.users.repository.UserRepository;
 import org.example.pedidosback.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User register(UserRequest userRequest) {
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setName(userRequest.getName());
         user.setType(UserType.CLIENT);
 
