@@ -26,4 +26,6 @@ public class Product {
     @NotNull
     @Positive
     private BigDecimal price;
+
+    private String imageUrl;
 }

@@ -2,6 +2,7 @@ package org.example.pedidosback.orders.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.pedidosback.orders.DTO.ProductRequest;
+import org.example.pedidosback.orders.DTO.ProductResponse;
 import org.example.pedidosback.orders.domain.Product;
 import org.example.pedidosback.orders.service.OrderService;
 import org.example.pedidosback.orders.service.ProductService;
@@ -23,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<List<ProductResponse>> getProducts() {
         return ResponseEntity.ok(productService.getProducts());
     }
 }

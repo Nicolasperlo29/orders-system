@@ -1,0 +1,59 @@
+<div class="page-wrapper">
+
+    <div class="products-section">
+        <h2 class="section-title">Menú</h2>
+        <div class="product-grid">
+            @for (item of products; track $index) {
+            <div class="product-card">
+                <div class="product-info">
+                    <span class="product-id">#{{ item.id }}</span>
+                    <h3 class="product-name">{{ item.name }}</h3>
+                    <span class="product-price">${{ item.price | number:'1.2-2' }}</span>
+                </div>
+                <div class="product-actions">
+                    <div class="quantity-control">
+                        <label class="qty-label">Cantidad</label>
+                        <input type="number" min="1" [(ngModel)]="cantidades[item.id]" (change)="persistirCarrito()">
+                    </div>
+                    <button class="btn-add" (click)="agregar(item)">+ Agregar</button>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    <aside class="cart-section">
+        <div class="cart-header">
+            <h2 class="section-title">Carrito</h2>
+            <span class="cart-count">{{ orderItem.length }} ítem(s)</span>
+        </div>
+
+        <div class="cart-items">
+            @if (orderItem.length === 0) {
+            <p class="cart-empty">Tu carrito está vacío.</p>
+            }
+            @for (item of orderItem; track $index; let i = $index) {
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <span class="cart-item-name">{{ getProductName(item.productId) }}</span>
+                    <input type="number" min="1" [(ngModel)]="item.quantity">
+
+                    <button (click)="eliminarItem(i)">Eliminar</button>
+                </div>
+                <span class="cart-item-subtotal">${{ getSubtotal(item) | number:'1.2-2' }}</span>
+            </div>
+            }
+        </div>
+
+        @if (orderItem.length > 0) {
+        <div class="cart-total">
+            <span>Total</span>
+            <span>${{ getTotal() | number:'1.2-2' }}</span>
+        </div>
+        <button class="btn-confirm" (click)="confirmar()" [routerLink]="['/order']">
+            Ir a pagar →
+        </button>
+        }
+    </aside>
+
+</div>

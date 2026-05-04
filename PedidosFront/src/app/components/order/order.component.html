@@ -1,0 +1,30 @@
+<div class="order-wrapper">
+  <div class="order-card">
+    <div class="order-header">
+      <h1 class="order-title">Confirmar Orden</h1>
+      @if (order?.orderNumber) {
+        <span class="order-number">#{{ order.orderNumber }}</span>
+      }
+    </div>
+
+    <div class="order-items">
+      <p class="order-items-label">Detalle</p>
+      @for (item of order?.items; track $index; let i = $index) {
+        <div class="order-item">
+          <span class="order-item-name">Producto #{{ item.productId }}</span>
+           <input type="number" min="1" [(ngModel)]="item.quantity" (change)="guardarCambios()">
+          <button (click)="eliminarItem(i)">Eliminar</button>
+        </div>
+      }
+    </div>
+
+    <button [routerLink]="['/product-list']">Volver</button>
+
+    <div class="order-total">
+      <span>Total</span>
+      <span class="total-amount">${{ order?.total | number:'1.2-2' }}</span>
+    </div>
+
+    <button class="btn-confirm" (click)="confirmar()">Confirmar y pagar</button>
+  </div>
+</div>
